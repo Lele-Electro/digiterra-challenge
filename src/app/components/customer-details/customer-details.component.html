@@ -1,0 +1,33 @@
+<form #detailsForm="ngForm">
+
+<!-- First Name -->
+	<div class="form-field-container">
+		<label for="firstname">First Name</label>
+		<input id="firstname"
+           name="firstname"
+           type="text"
+           required
+           [(ngModel)]="customerDetails.firstName" />
+  </div>
+<!-- Last Name -->
+	<div class="form-field-container">
+		<label for="lastname">Last Name</label>
+		<input id="lastname"
+           name="lastname"
+           type="text"
+           required
+           [(ngModel)]="customerDetails.lastName" />
+  </div>
+<!-- Cell Number -->
+	<div class="form-field-container">
+		<label for="cellnumber">Cellphone Number</label>
+		<input id="cellnumber"
+           name="cellnumber"
+           type="text"
+           required
+           [(ngModel)]="customerDetails.cellNumber" />
+  </div>
+
+
+</form>
+

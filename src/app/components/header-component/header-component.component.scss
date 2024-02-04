@@ -1,0 +1,44 @@
+.heading-container {
+    height: 90px;
+    // width: 100%;
+    background-color: tomato;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    p,
+    h2, h4,.logo-container {
+        margin: 0px;
+        padding: 0px;
+        cursor: pointer;
+    }
+    p:hover,
+    h2:hover, h4:hover,.logo-container :hover{
+        color:white;
+    }
+
+    img {
+        width: 80px;
+    }
+
+    img::before {
+        content: 'Tester';
+        font-size: large;
+        display: block;
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        bottom: 0px;
+        z-index: 50;
+    }
+
+    h2 {
+        float: right;
+        margin-right: 20px;
+    }
+.logo-container{
+width: 300px;
+float: left;
+}
+
+}

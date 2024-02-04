@@ -1,0 +1,12 @@
+<form #commentForm="ngForm">
+	<div class="form-field-container">
+		<label for="comment">Comment</label>
+		<input id="comment"
+           name="comment"
+           type="text"
+           (keyup)="logComment()"
+           required
+           [(ngModel)]="customerCommentRef.comment" />
+  </div>
+
+</form>

@@ -1,0 +1,40 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+button{
+    width:180px;
+    height: 50px;
+    color:white;
+    background-color: black;
+    border-radius:  10px;
+}
+
+button:hover{
+    cursor:pointer;
+}
+
+.page-padding {
+    padding-left: 120px;
+    padding-right: 120px;
+}
+
+.form-field-container, .button-options-container{
+width: 75%;
+justify-content: center;
+}
+.form-field-container{
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    grid-template-rows: 40px 1fr;
+    column-gap:5px;
+    row-gap: 10px;
+
+    input{
+        // border-radius: 5px;
+
+    }
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

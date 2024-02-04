@@ -1,0 +1,80 @@
+.page-padding {
+
+    .main-container {
+        height: 90vh;
+        width: 100%;
+        display: grid;
+
+
+
+        // .form-container {
+        //     display: grid;
+        //     justify-content:center;
+
+
+        // }
+
+        .button-options-container {
+        }
+    }
+
+    .form-and-nav-buttons{
+        padding-top: 50px;
+        display: grid;
+        grid-template-rows: 1fr 100px;
+    }
+
+    .landing-area{
+        display: grid;
+        grid-template-rows: 100px 1fr;
+    }
+
+
+    .button-options-container {
+
+        button:nth-of-type(1) {
+            float: left;
+        }
+        button:nth-of-type(2) {
+            float: right;
+        }
+    }
+
+}
+
+table {
+    width: 100%;
+  }
+
+  .table-nav{
+    margin-top: 20px;
+    h1{
+        float: left;
+    }
+
+    button{
+        float: right;
+    }
+  }
+
+  .mat-elevation-z8{
+    box-shadow: none;
+  }
+
+.customers{
+
+
+    .single-customer-block{
+        // background-color: black;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        height: 160px;
+        text-align: center;
+        padding: 5px;
+    }
+    .single-customer-block:hover{
+        // background-color: black;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+        cursor: pointer;
+        height: 160px;
+    }
+}
