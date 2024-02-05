@@ -1,9 +1,13 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { NgFor } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit,ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {MatSort, Sort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { Event, RouterEvent, Router, ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs';
+import { GenericSnackbarMessageComponent } from 'src/app/components/generic-snackbar-message/generic-snackbar-message.component';
 import { address, comment, customer, customerPaths, details, id, physicalAddress, postalAddress, storedCustomer, } from 'src/app/models/customer';
 import { NewCustomerService } from 'src/app/services/new-customer.service';
 
@@ -22,7 +26,9 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['name', 'surname', 'cellNumber', 'action'];
   dataSource = new MatTableDataSource(this.customers);
   customerIDPresent = false;
-
+  detailsForm!: NgForm;
+  addressForm!: NgForm;
+  commentForm!: NgForm;
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -31,7 +37,8 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
     private cd: ChangeDetectorRef,
     private customerService: NewCustomerService,
     private _liveAnnouncer: LiveAnnouncer,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _snackBar: MatSnackBar
   ) {
     router.events
       .pipe(
@@ -74,10 +81,10 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
     return ['/customers/new/address'];
   }
 
-  navigateToMoreDetailsPage(customer: storedCustomer){
-    this.currentPath = '/' + 'customers' + '/' + customer.firstName + customer.lastName
-    this.router.navigate(['/' + 'customers' +  '/' + customer._id]);
-
+  navigateToMoreDetailsPage(customer: storedCustomer) {
+    this.currentPath =
+      '/' + 'customers' + '/' + customer.firstName + customer.lastName;
+    this.router.navigate(['/' + 'customers' + '/' + customer._id]);
   }
 
   formNavigateForward() {
@@ -172,11 +179,20 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
     this.customerService
       .addcustomer(this.newCustomer)
       .subscribe((responseData) => {
-        alert(responseData.message);
+        this.openSnackBar(3)
+        this.router.navigate([customerPaths.allCustomers]);
       });
   }
 
-  checkIfFormPath(){
+  openSnackBar(seconds: number) {
+    this._snackBar.openFromComponent(GenericSnackbarMessageComponent, {
+      duration: seconds * 1000,
+    });
+  }
+
+
+
+  checkIfFormPath() {
     if (
       this.currentPath === '/customers/new/details' ||
       this.currentPath === '/customers/new/address' ||
@@ -188,19 +204,29 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   fetchIDFromURL() {
     this.route.paramMap.subscribe((params) => {
       let id = params.get('customerID');
-      if(id === null){
+      if (id === null) {
         this.customerIDPresent = false;
-      } else{
-        this.customerIDPresent = true
+      } else {
+        this.customerIDPresent = true;
       }
     });
   }
 
+  updateDetailsFormStatus(form: NgForm) { this.detailsForm = form; }
+  updateAddressFormStatus(form: NgForm) { this.addressForm = form; }
+  updateCommentFormStatus(form: NgForm) { this.commentForm = form; }
 
+  determineFormValidationStatus() {
+    if ( this.detailsForm?.invalid || this.addressForm?.invalid || this.commentForm?.invalid ) {
+      //if any of the forms are invalid then disable
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   announceSortChange(sortState: any) {
     if (sortState.direction) {

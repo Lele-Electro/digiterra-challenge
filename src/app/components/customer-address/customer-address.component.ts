@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewChecked, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {
   address,
@@ -12,12 +12,22 @@ import {
   templateUrl: './customer-address.component.html',
   styleUrls: ['./customer-address.component.scss'],
 })
-export class CustomerAddressComponent implements OnInit {
+export class CustomerAddressComponent implements AfterViewChecked{
 
   @Input() addresses!: address;
-  @Output() customerCommentUpdate: EventEmitter<address> = new EventEmitter<address>();
+  @Output() addressForm:EventEmitter<NgForm> = new EventEmitter<NgForm>
+  @ViewChild('addressForm') addressFormRef!: NgForm
 
-  ngOnInit(): void {
-
+  outputFormToParentComponent(form:NgForm){
+    this.addressForm.emit(form)
   }
+
+
+  ngAfterViewChecked(): void {
+    this.addressForm.emit(this.addressFormRef)
+  }
+
+
+
+
 }

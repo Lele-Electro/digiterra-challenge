@@ -1,56 +1,113 @@
 <form #addressForm="ngForm">
     <!--  Physical Address --- Physical Address --- Physical Address --- Physical Address  --- Physical Address -->
     <!-- line One -->
-    <div class="form-field-container">
-        <label for="lineone">Line One</label>
-        <input id="lineone" name="lineone" type="text" required [(ngModel)]="addresses.physicalAddress.lineOne" />
-    </div>
+<h3>Physical Address</h3>
+    <mat-form-field appearance="outline">
+        <mat-label>Line One</mat-label>
+        <input
+        matInput
+        id="lineone"
+        name="lineone"
+        type="text"
+        required
+        (keyup)="outputFormToParentComponent(addressForm)"
+        [(ngModel)]="addresses.physicalAddress.lineOne" />
+    </mat-form-field>
 
     <!-- City -->
-    <div class="form-field-container">
-        <label for="city">City</label>
-        <input id="city" name="city" type="text" required [(ngModel)]="addresses.physicalAddress.city" />
-    </div>
+    <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <input
+        matInput
+        id="city"
+        name="city"
+        type="text"
+        required
+        (keyup)="outputFormToParentComponent(addressForm)"
+        [(ngModel)]="addresses.physicalAddress.city" />
+    </mat-form-field>
 
     <!-- country -->
-    <div class="form-field-container">
-        <label for="country">Country</label>
-        <input id="country" name="country" type="text" required [(ngModel)]="addresses.physicalAddress.country" />
-    </div>
+    <mat-form-field appearance="outline">
+        <mat-label>Country</mat-label>
+        <input
+        matInput
+        id="country"
+        name="country"
+        type="text"
+        required
+        (keyup)="outputFormToParentComponent(addressForm)"
+        [(ngModel)]="addresses.physicalAddress.country" />
+    </mat-form-field>
 
     <!-- code -->
-    <div class="form-field-container">
-        <label for="code">Code</label>
-        <input id="code" name="code" type="text" required [(ngModel)]="addresses.physicalAddress.code" />
-    </div>
+    <mat-form-field appearance="outline">
+        <mat-label>Code</mat-label>
+        <input
+        matInput
+        id="code"
+        name="code"
+        type="text"
+        required
+        (keyup)="outputFormToParentComponent(addressForm)"
+        [(ngModel)]="addresses.physicalAddress.code"  />
+    </mat-form-field>
 
 
     <!--  Postal Address --- Postal Address --- Postal Address --- Postal Address  --- Postal Address -->
-    <!-- line One -->
-    <div class="form-field-container">
-        <label for="postal-lineone">Line One</label>
-        <input id="postal-lineone" name="postal-lineone" type="text" required
-            [(ngModel)]="addresses.postalAddress.lineOne" />
-    </div>
+    <h3>Postal Address</h3>
+    <!-- Line One -->
+    <mat-form-field appearance="outline">
+        <mat-label>Line One</mat-label>
+        <input
+        matInput
+        id="postal-lineone"
+        name="postal-lineone"
+        type="text"
+        required
+        (keyup)="outputFormToParentComponent(addressForm)"
+        [(ngModel)]="addresses.postalAddress.lineOne" />
+    </mat-form-field>
 
     <!-- City -->
-    <div class="form-field-container">
-        <label for="postal-city">City</label>
-        <input id="postal-city" name="postal-city" type="text" required [(ngModel)]="addresses.postalAddress.city" />
-    </div>
+    <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <input
+        matInput
+        id="postal-city"
+        name="postal-city"
+        type="text"
+        required
+        (keyup)="outputFormToParentComponent(addressForm)"
+        [(ngModel)]="addresses.postalAddress.city" />
+    </mat-form-field>
+
 
     <!-- country -->
-    <div class="form-field-container">
-        <label for="postal-country">Country</label>
-        <input id="postal-country" name="postal-country" type="text" required
-            [(ngModel)]="addresses.postalAddress.country" />
-    </div>
+    <mat-form-field appearance="outline">
+    <mat-label>Country</mat-label>
+        <input
+        matInput
+        id="postal-country"
+        name="postal-country"
+        type="text"
+        required
+        (keyup)="outputFormToParentComponent(addressForm)"
+        [(ngModel)]="addresses.postalAddress.country" />
+    </mat-form-field>
 
     <!-- code -->
-    <div class="form-field-container">
-        <label for="postal-code">Code</label>
-        <input id="postal-code" name="postal-code" type="text" required [(ngModel)]="addresses.postalAddress.code" />
-    </div>
+    <mat-form-field appearance="outline">
+    <mat-label>Code</mat-label>
+            <input
+            matInput
+            id="postal-code"
+            name="postal-code"
+            type="text"
+            required
+            (keyup)="outputFormToParentComponent(addressForm)"
+            [(ngModel)]="addresses.postalAddress.code" />
+    </mat-form-field>
 
 
 

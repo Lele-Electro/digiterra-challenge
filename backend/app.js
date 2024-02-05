@@ -46,7 +46,7 @@ app.post( '/api/customers', (req, res, next) => {
     const customer = new Customer({
         firstName: req.body.customerDetails.firstName,
         lastName: req.body.customerDetails.lastName,
-        cellNumber: req.body.customerDetails.cellNumber,
+            cellNumber: req.body.customerDetails.cellNumber,
         lineOne: req.body.customerAddress.physicalAddress.lineOne,
         city: req.body.customerAddress.physicalAddress.city,
         country: req.body.customerAddress.physicalAddress.country,

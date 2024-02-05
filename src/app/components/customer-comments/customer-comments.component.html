@@ -1,12 +1,15 @@
 <form #commentForm="ngForm">
-	<div class="form-field-container">
-		<label for="comment">Comment</label>
-		<input id="comment"
-           name="comment"
-           type="text"
-           (keyup)="logComment()"
-           required
-           [(ngModel)]="customerCommentRef.comment" />
-  </div>
+  <!-- code -->
+  <mat-form-field appearance="outline">
+    <mat-label>Comment</mat-label>
+            <input
+            matInput
+            id="comment"
+            name="comment"
+            type="text"
+            (keyup)="outputFormToParentComponent(commentForm)"
+            required
+            [(ngModel)]="customerCommentRef.comment"  />
+    </mat-form-field>
 
 </form>

@@ -1,7 +1,16 @@
+//Variables
+@import url('https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap');
+:root {
+    --primaryColorWatered : #673ab7;;
+    --primaryColorWateredDown : #9782bb;;
+  }
+
 body {
     margin: 0px;
     padding: 0px;
 }
+
+
 
 button{
     width:180px;
@@ -20,10 +29,13 @@ button:hover{
     padding-right: 120px;
 }
 
-.form-field-container, .button-options-container{
-width: 75%;
-justify-content: center;
+form{
+    display: grid;
+    grid-template-columns: 50%;
+    justify-content: center;
+
 }
+
 .form-field-container{
     display: grid;
     grid-template-columns: 150px 1fr;

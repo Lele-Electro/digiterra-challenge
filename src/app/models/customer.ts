@@ -7,7 +7,7 @@ export interface customer {
 
 
 export enum customerPaths {
-  allCustomers = '/',
+  allCustomers = '/customers',
   details = '/customers/new/details',
   address = '/customers/new/address',
   comments = '/customers/new/comment',

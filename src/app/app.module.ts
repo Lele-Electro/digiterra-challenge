@@ -14,6 +14,15 @@ import { HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatTableModule } from '@angular/material/table';
 import { MoreDetailsComponent } from './components/more-details/more-details.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import { FooterComponent } from './components/footer/footer.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { GenericSnackbarMessageComponent } from './components/generic-snackbar-message/generic-snackbar-message.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
+
+
 
 
 @NgModule({
@@ -25,7 +34,9 @@ import { MoreDetailsComponent } from './components/more-details/more-details.com
     CustomerAddressComponent,
     CustomerCommentsComponent,
     HeaderComponentComponent,
-    MoreDetailsComponent
+    MoreDetailsComponent,
+    FooterComponent,
+    GenericSnackbarMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +44,12 @@ import { MoreDetailsComponent } from './components/more-details/more-details.com
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatTableModule
+    MatTableModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    MatIconModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

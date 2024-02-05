@@ -1,32 +1,49 @@
 <form #detailsForm="ngForm">
-
 <!-- First Name -->
-	<div class="form-field-container">
-		<label for="firstname">First Name</label>
-		<input id="firstname"
-           name="firstname"
-           type="text"
-           required
-           [(ngModel)]="customerDetails.firstName" />
-  </div>
+  <mat-form-field appearance="outline">
+  <mat-label>First Name</mat-label>
+    <input
+    matInput
+    id="firstname"
+    name="firstname"
+    type="text"
+    required
+    [(ngModel)]="customerDetails.firstName"
+    (keyup)="outputFormToParentComponent(detailsForm)" />
+  </mat-form-field>
+
+
 <!-- Last Name -->
-	<div class="form-field-container">
-		<label for="lastname">Last Name</label>
-		<input id="lastname"
-           name="lastname"
-           type="text"
-           required
-           [(ngModel)]="customerDetails.lastName" />
-  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Surname</mat-label>
+      <input
+      matInput
+      id="lastname"
+        name="lastname"
+        type="text"
+        required
+        [(ngModel)]="customerDetails.lastName"
+        (keyup)="outputFormToParentComponent(detailsForm)"
+
+      />
+    </mat-form-field>
+
+
 <!-- Cell Number -->
-	<div class="form-field-container">
-		<label for="cellnumber">Cellphone Number</label>
-		<input id="cellnumber"
-           name="cellnumber"
-           type="text"
-           required
-           [(ngModel)]="customerDetails.cellNumber" />
-  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Cell Number</mat-label>
+      <input
+      matInput
+      id="cellnumber"
+      name="cellnumber"
+      type="tel"
+      maxlength="12"
+      required
+      [(ngModel)]="customerDetails.cellNumber"
+      (keyup)="outputFormToParentComponent(detailsForm)"
+
+      />
+    </mat-form-field>
 
 
 </form>

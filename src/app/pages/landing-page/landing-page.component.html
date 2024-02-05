@@ -1,14 +1,21 @@
-<app-header-component></app-header-component>
+
 <div class="page-padding">
     <div class="main-container">
 
 <!-- TABLE NAV AND TABLE FOR LANDING AREA -->
-    <div class="landing-area"  *ngIf="!checkIfFormPath()">
+    <div class="landing-area" >
         <div class="table-nav">
-            <h1>All Customers ({{latestCustomerCount}})</h1>
-            <button mat-raised-button [routerLink]="['/customers/new/details']">Add Customer</button>
+            <h1 *ngIf="currentPath === '/customers' " >All Customers ({{latestCustomerCount}})</h1>
+            <h1 *ngIf="currentPath === '/customers/new/details' " >Add Customer - Details</h1>
+            <h1 *ngIf="currentPath === '/customers/new/address' " >Add Customer - Addresses</h1>
+            <h1 *ngIf="currentPath === '/customers/new/comment' " >Add Customer - Comments</h1>
+
+            <button  *ngIf="currentPath === '/customers'" mat-raised-button [routerLink]="['/customers/new/details']">Add Customer</button>
         </div>
-        <div class="customers">
+        <div  class="customers"  *ngIf="currentPath === '/customers'">
+            <div class="no-customers-loaded" *ngIf="dataSource.data.length === 0" >
+                <h1>No Customers yet :). No worries just <span [routerLink]="['/customers/new/details']" >add some</span></h1>
+            </div>
             <table *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource" matSort
                 (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
 
@@ -42,7 +49,7 @@
                         Action
                     </th>
                     <td mat-cell class="more-details-link" *matCellDef="let customer"
-                        (click)="navigateToMoreDetailsPage(customer)"> Read Morez </td>
+                        (click)="navigateToMoreDetailsPage(customer)"> Read More...</td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -55,19 +62,18 @@
 <!-- TABLE NAV AND TABLE FOR LANDING AREA -->
 <div class="form-and-nav-buttons">
     <div class="form-container">
-        <app-customer-details *ngIf="currentPath === '/customers/new/details' "
-            [customerDetails]="newCustomer.customerDetails"></app-customer-details>
-        <app-customer-address *ngIf="currentPath === '/customers/new/address' "
-            [addresses]="newCustomer.customerAddress"></app-customer-address>
-        <app-customer-comments *ngIf="currentPath === '/customers/new/comment' "
-            [customerCommentRef]="newCustomer.customerComment"></app-customer-comments>
+        <app-customer-details (detailsForm)="updateDetailsFormStatus($event)" *ngIf="currentPath === '/customers/new/details' " [customerDetails]="newCustomer.customerDetails"></app-customer-details>
+        <app-customer-address (addressForm)="updateAddressFormStatus($event)"*ngIf="currentPath === '/customers/new/address' " [addresses]="newCustomer.customerAddress"></app-customer-address>
+        <app-customer-comments  (commentForm)="updateCommentFormStatus($event)" *ngIf="currentPath === '/customers/new/comment' " [customerCommentRef]="newCustomer.customerComment"></app-customer-comments>
         <app-more-details *ngIf="customerIDPresent"></app-more-details>
     </div>
 
     <div class="button-options-container" *ngIf="checkIfFormPath()">
-        <button (click)="formNavigateBackward()">Back</button>
-        <button *ngIf="currentPath !== '/customers/new/comment' " (click)="formNavigateForward()">Next</button>
-        <button *ngIf="currentPath === '/customers/new/comment' " (click)="addCustomer()">submit</button>
+        <div class="buttons-sub-container">
+            <button mat-raised-button [disabled]="currentPath === '/customers/new/details' " (click)="formNavigateBackward()">Back</button>
+            <button color="primary" mat-raised-button *ngIf="currentPath !== '/customers/new/comment' " (click)="formNavigateForward()" [disabled]="determineFormValidationStatus()">Next</button>
+            <button color="primary" mat-raised-button *ngIf="currentPath === '/customers/new/comment' " (click)="addCustomer()" [disabled]="determineFormValidationStatus()">submit</button>
+        </div>
     </div>
 
 </div>
