@@ -27,6 +27,9 @@ app.use((req,res, next) => {
     next();
 })
 
+app.get('/test', (req, res)=>{
+    res.send('Hello World')
+})
 
 app.get('/api/customers', (req, res, next) => {
     Customer.find().then( documents => {
