@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class NewCustomerService {
+  readonly baseUrl = 'https://shrouded-eyrie-81070-212f22de6ff8.herokuapp.com'
   private customers: customer[] = [];
   private persistedCustomerCount = new BehaviorSubject<number>(0);
   currentCount = this.persistedCustomerCount.asObservable()
@@ -20,7 +21,7 @@ export class NewCustomerService {
   }
 
   getCustomers(){
-    return this.http.get<{message: string, customers: storedCustomer[]}>('http://localhost:3000/api/customers')
+    return this.http.get<{message: string, customers: storedCustomer[]}>(`${this.baseUrl}/api/customers`)
     .subscribe( (customerData) => {
       this.storeCustomersInLocalStorage(customerData.customers);
       this.persistedCustomerCount.next(customerData.customers.length);
@@ -33,7 +34,7 @@ export class NewCustomerService {
 
 addcustomer(customer: customer){
  return this.http
-.post<{message:string}>('http://localhost:3000/api/customers', customer);
+.post<{message:string}>(`${this.baseUrl}/api/customers`, customer);
 
 }
 
@@ -44,9 +45,7 @@ storeCustomersInLocalStorage(storedcustomers: any[]){
 }
 
 retrieveCustomersInLocalStorage(){
-
- return JSON.parse(localStorage.getItem('storedCustomers')  || '""')
-
+ return JSON.parse(localStorage.getItem('storedCustomers')  || '""');
 }
 
 }
