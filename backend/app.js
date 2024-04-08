@@ -35,7 +35,7 @@ app.get('/api/customers', (req, res, next) => {
     Customer.find().then( documents => {
 
 res.json({
-    message: 'Customers fetched successfully',
+    message: 'Customers fetched successfully - Test 08 April 2024',
     customers:documents
     })
 
@@ -45,7 +45,7 @@ res.json({
 });
 
 //POST CUSTOMERS
-app.post( '/api/customers2', (req, res, next) => {
+app.post( '/api/customers', (req, res, next) => {
     const customer = new Customer({
         firstName: req.body.customerDetails.firstName,
         lastName: req.body.customerDetails.lastName,
