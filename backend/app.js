@@ -3,9 +3,14 @@ const bodyParser = require('body-parser');
 const Customer = require('./models/customer')
 const app = express();
 const mongoose2 =  require('mongoose');
+const userRoutes = require('./user');
+const userRoutesLoaded = require('./user-loaded');
+const customerRoutes = require('./customers');
+const cors = require('cors');
 
-
+app.use(cors());
 app.use(bodyParser.json());
+
 // mongodb+srv://Admin:<password>@cluster0.gqxeqtf.mongodb.net/?retryWrites=true&w=majority
 
 // mongoose2.connect('mongodb+srv://Admin:KElJ3lISFvKq2mHL@cluster0.gqxeqtf.mongodb.net/?retryWrites=true&w=majority')
@@ -22,15 +27,16 @@ mongoose2.connect('mongodb+srv://Admin:KElJ3lISFvKq2mHL@cluster0.gqxeqtf.mongodb
 app.use((req,res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
-    res.setHeader('Access-Control-Allow-Methods', '*')
+    // res.setHeader('Access-Control-Allow-Methods', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, PUT, OPTIONS')
     next();
 })
 
-app.get('/test', (req, res)=>{
-    res.send('Hello World')
-})
+// app.get('/test', (req, res)=>{
+//     res.send('Hello World')
+// })
 
+// GET CUSTOMERS
 app.get('/api/customers', (req, res, next) => {
     Customer.find().then( documents => {
 
@@ -41,30 +47,16 @@ res.json({
 
 })
 
-
 });
 
-//POST CUSTOMERS
-app.post( '/api/customers', (req, res, next) => {
-    const customer = new Customer({
-        firstName: req.body.customerDetails.firstName,
-        lastName: req.body.customerDetails.lastName,
-        cellNumber: req.body.customerDetails.cellNumber,
-        lineOne: req.body.customerAddress.physicalAddress.lineOne,
-        city: req.body.customerAddress.physicalAddress.city,
-        country: req.body.customerAddress.physicalAddress.country,
-        code: req.body.customerAddress.physicalAddress.code,
-        postalLineOne: req.body.customerAddress.postalAddress.lineOne,
-        postalCity: req.body.customerAddress.postalAddress.city,
-        postalCountry: req.body.customerAddress.postalAddress.country,
-        postalCode: req.body.customerAddress.postalAddress.code,
-        customerComment: req.body.customerComment.comment
-    })
 
-    customer.save();
-    res.status(201).json({
-        message: 'Customer added successfully'
-    })
-})
+// USER ROUTES
+app.use('/api/user', userRoutes);
+
+// USER ROUTES Loaded
+app.use('/api/user/loaded', userRoutesLoaded);
+
+// CUSTOMER ROUTES
+app.use('/api/customers', customerRoutes);
 
 module.exports = app;
