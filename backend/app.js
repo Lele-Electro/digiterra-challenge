@@ -1,11 +1,12 @@
-const express =  require ('express');
+const express = require('express');
 const bodyParser = require('body-parser');
-const Customer = require('./models/customer')
+const Customer = require('./models/customer');
 const app = express();
-const mongoose2 =  require('mongoose');
-const userRoutes = require('./user');
-const userRoutesLoaded = require('./user-loaded');
-const customerRoutes = require('./customers');
+const mongoose2 = require('mongoose');
+const userRoutes = require('./routes/user');
+const userRoutesLoaded = require('./routes/user-loaded');
+const customerRoutes = require('./routes/customers');
+const cvRoutes = require('./routes/cv')
 const cors = require('cors');
 
 app.use(cors());
@@ -15,21 +16,21 @@ app.use(bodyParser.json());
 
 // mongoose2.connect('mongodb+srv://Admin:KElJ3lISFvKq2mHL@cluster0.gqxeqtf.mongodb.net/?retryWrites=true&w=majority')
 mongoose2.connect('mongodb+srv://Admin:KElJ3lISFvKq2mHL@cluster0.gqxeqtf.mongodb.net/digiterraDB?retryWrites=true&w=majority')
-// mongooose.connect('mongodb+srv://Admin:KElJ3lISFvKq2mHL@cluster0@cluster0.gqxeqtf.mongodb.net/?retryWrites=true&w=majority')
-.then(() => {
+  // mongooose.connect('mongodb+srv://Admin:KElJ3lISFvKq2mHL@cluster0@cluster0.gqxeqtf.mongodb.net/?retryWrites=true&w=majority')
+  .then(() => {
     console.log("connected to the database");
-})
-.catch(( error)=> {
+  })
+  .catch((error) => {
     console.log("connection to database failed.");
-    console.log(error?.MongooseServerSelectionError)
-})
+    console.log(error ?.MongooseServerSelectionError)
+  })
 
-app.use((req,res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    // res.setHeader('Access-Control-Allow-Methods', '*')
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, PUT, OPTIONS')
-    next();
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  // res.setHeader('Access-Control-Allow-Methods', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, PUT, OPTIONS')
+  next();
 })
 
 // app.get('/test', (req, res)=>{
@@ -38,14 +39,14 @@ app.use((req,res, next) => {
 
 // GET CUSTOMERS
 app.get('/api/customers', (req, res, next) => {
-    Customer.find().then( documents => {
+  Customer.find().then(documents => {
 
-res.json({
-    message: 'Customers fetched successfully - Test 08 April 2024',
-    customers:documents
+    res.json({
+      message: 'Customers fetched successfully - Test 08 April 2024',
+      customers: documents
     })
 
-})
+  })
 
 });
 
@@ -58,5 +59,8 @@ app.use('/api/user/loaded', userRoutesLoaded);
 
 // CUSTOMER ROUTES
 app.use('/api/customers', customerRoutes);
+
+// CV ROUTES
+app.use('/api/ribeiro-cafe', cvRoutes);
 
 module.exports = app;

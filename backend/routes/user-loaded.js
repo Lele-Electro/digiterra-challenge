@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose3 = require("mongoose");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const UserLoaded = require("./models/user-loaded");
+const UserLoaded = require("../models/user-loaded");
 const jwt = require('jsonwebtoken')
 
 router.post("/signup", (req, res, next) => {
