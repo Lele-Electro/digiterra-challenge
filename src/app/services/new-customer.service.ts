@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class NewCustomerService {
-  readonly baseUrl = 'https://general-backend-60f0a28fd9dd.herokuapp.com/'
+  readonly baseUrl = 'https://general-backend-60f0a28fd9dd.herokuapp.com'
   // readonly baseUrl = 'http://localhost:3000'
   private customers: customer[] = [];
   private persistedCustomerCount = new BehaviorSubject<number>(0);
