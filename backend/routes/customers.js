@@ -1,8 +1,13 @@
 const express =  require ('express');
+const Customer = require('../models/customer');
+const app2 = express();
 const router = express.Router();
 
+
+
+  
 //POST CUSTOMERS
-router.post( '/api/customers', (req, res, next) => {
+app2.post( '/api/customers', (req, res, next) => {
     const customer = new Customer({
         firstName: req.body.customerDetails.firstName,
         lastName: req.body.customerDetails.lastName,
