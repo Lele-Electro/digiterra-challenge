@@ -3,19 +3,19 @@ const mongoose3 = require("mongoose");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const UserLoaded = require("../models/user-loaded");
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const userVla = require("../models/user-vla");
 
 router.post("/signup", (req, res, next) => {
   console.log('sign up request received');
   console.log(req.body)
   bcrypt.hash(req.body.password, 10).then((hash) => {
-    const user = new UserLoaded({
+    const user = new userVla({
       email: req.body.email,
       password: hash,
-      businessClient: req.body.businessClient,
-      companyName: req.body.companyName ?? null,
-      contactPersonName: req.body.contactPersonName,
-      contactPersonSurname: req.body.contactPersonSurname,
+      userType: req.body.userType,   
+      name: req.body.name,
+      surname: req.body.surname,
       contactNumber: req.body.contactNumber,
       
     });
@@ -37,7 +37,7 @@ router.post("/signup", (req, res, next) => {
 
 router.post("/signin", (req, res, next) => {
     let fetchedUser;
-    UserLoaded.findOne({ email: req.body.email })
+    userVla.findOne({ email: req.body.email })
     .then((user) => {
       // Check to see if there is a user with the requested email postalAddress
       if (!user) {
@@ -69,11 +69,11 @@ router.post("/signin", (req, res, next) => {
               token: token,
               expiresIn: 3600,
               userInformationOnSignIn :{
-                contactPersonName: fetchedUser.contactPersonName,
-                contactPersonSurname: fetchedUser.contactSurname,
-                businessClient: fetchedUser.businessClient,
+                name: fetchedUser.name,
+                surname: fetchedUser.surname,
+                userType: fetchedUser.userType,
                 email: fetchedUser.email,
-                companyName: fetchedUser.companyName ?? null,
+                contactNumber: fetchedUser.contactNumber ?? null,
 
               }
 

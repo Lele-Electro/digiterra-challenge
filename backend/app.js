@@ -6,7 +6,8 @@ const mongoose2 = require('mongoose');
 const userRoutes = require('./routes/user');
 const userRoutesLoaded = require('./routes/user-loaded');
 const customerRoutes = require('./routes/customers');
-const cvRoutes = require('./routes/cv')
+const cvRoutes = require('./routes/cv');
+const vlaUserRoutes = require('./routes/user-vla');
 const cors = require('cors');
 
 app.use(cors());
@@ -62,5 +63,8 @@ app.use('/api/customers', customerRoutes);
 
 // CV ROUTES
 app.use('/api/ribeiro-cafe', cvRoutes);
+
+// VLA Routes
+app.use('/api/vla/user', vlaUserRoutes);
 
 module.exports = app;
