@@ -17,6 +17,13 @@ router.post("/signup", (req, res, next) => {
       name: req.body.name,
       surname: req.body.surname,
       contactNumber: req.body.contactNumber,
+      nextOfKinEmail: req.body.nextOfKinEmail,
+      nextOfKinPassword:req.body.nextOfKinPassword ,
+      nextOfKinUserType:req.body.nextOfKinUserType  ,
+      nextOfKinName:req.body.nextOfKinName ,
+      nextOfKinSurname:req.body.nextOfKinSurname,
+      nextOfKinContactNumber:req.body.nextOfKinContactNumber,
+      availability:req.body.availability
       
     });
     user
@@ -74,11 +81,15 @@ router.post("/signin", (req, res, next) => {
                 userType: fetchedUser.userType,
                 email: fetchedUser.email,
                 contactNumber: fetchedUser.contactNumber ?? null,
-
+                userId: fetchedUser._id
               }
 
 
           })
+          
+          console.log('user ID');
+          console.log(fetchedUser._id)
+
       };
 
       }
@@ -90,5 +101,26 @@ router.post("/signin", (req, res, next) => {
     //   });
     // });
 });
+
+router.put('/updateuser/:id', async (req, res) => {
+  console.log('user body')
+  console.log(req.body)
+  const {id} = req.params;
+try{
+
+
+const user = await userVla.findByIdAndUpdate(id,req.body);
+  if(!user){
+    console.log('User not found')
+    return res.status(404).json({message:'User Not Found'})
+  } else{
+    console.log('attempting to find using this ID', id)
+    const updatedUser = await userVla.findById(id)
+    res.status(200).json(updatedUser)
+  }
+}catch(error){
+  res.status(500).json({message:error.message})
+}
+})
 
 module.exports = router;
