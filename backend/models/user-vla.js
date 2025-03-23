@@ -8,13 +8,19 @@ const userSchema2 = mongoose.Schema({
     name: {type: String, required: true},
     surname:{type: String, required: true},
     contactNumber:{type: String, required: true},
+    bankName:{type: String, required: false},
+    bankAccountNumber:{type: String, required: false},
+    availability:{type: [Number], required: false},
+
     nextOfKinEmail: {type: String, required: false, unique: true},
     nextOfKinPassword: {type: String, required: false},
     nextOfKinUserType:  {type:String, required: false},
     nextOfKinName: {type: String, required: false},
     nextOfKinSurname:{type: String, required: false},
     nextOfKinContactNumber:{type: String, required: false},
-    availability:{type: [Number], required: false}
+    nextOfKinBankName:{type: String, required: false},
+    nextOfKinBankAccountNumber:{type: String, required: false},
+
 
 });
 

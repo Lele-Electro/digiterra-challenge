@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose3 = require("mongoose");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const UserLoaded = require("../models/user-loaded");
 const jwt = require('jsonwebtoken');
 const userVla = require("../models/user-vla");
 
@@ -17,13 +16,18 @@ router.post("/signup", (req, res, next) => {
       name: req.body.name,
       surname: req.body.surname,
       contactNumber: req.body.contactNumber,
+      bankName:req.body.bankName,
+      bankAccountNumber:req.body.bankAccountNumber,
+      availability:req.body.availability,
       nextOfKinEmail: req.body.nextOfKinEmail,
       nextOfKinPassword:req.body.nextOfKinPassword ,
       nextOfKinUserType:req.body.nextOfKinUserType  ,
       nextOfKinName:req.body.nextOfKinName ,
       nextOfKinSurname:req.body.nextOfKinSurname,
       nextOfKinContactNumber:req.body.nextOfKinContactNumber,
-      availability:req.body.availability
+      nextOfKinBankName:req.body.nextOfKinBankName,
+      nextOfKinBankAccountNumber:req.body.nextOfKinBankAccountNumber
+
       
     });
     user
@@ -81,7 +85,18 @@ router.post("/signin", (req, res, next) => {
                 userType: fetchedUser.userType,
                 email: fetchedUser.email,
                 contactNumber: fetchedUser.contactNumber ?? null,
-                userId: fetchedUser._id
+                userId: fetchedUser._id,
+                bankName: fetchedUser.bankName ?? null,
+                bankAccountNumber: fetchedUser.bankAccountNumber ?? null,
+                availability: fetchedUser.availability ?? null,
+                nextOfKinName: fetchedUser.nextOfKinName ?? null,
+                nextOfKinSurname: fetchedUser.nextOfKinSurname ?? null,
+                nextOfKinEmail: fetchedUser.nextOfKinEmail ?? null,
+                nextOfKinContactNumber: fetchedUser.nextOfKinContactNumber ?? null,
+                nextOfKinUserType: fetchedUser.nextOfKinUserType ?? null,
+                nextOfKinBankName: fetchedUser.nextOfKinBankName ?? null,
+                nextOfKinBankAccountNumber: fetchedUser.nextOfKinBankAccountNumber ?? null,
+            
               }
 
 
@@ -107,9 +122,8 @@ router.put('/updateuser/:id', async (req, res) => {
   console.log(req.body)
   const {id} = req.params;
 try{
-
-
 const user = await userVla.findByIdAndUpdate(id,req.body);
+
   if(!user){
     console.log('User not found')
     return res.status(404).json({message:'User Not Found'})
