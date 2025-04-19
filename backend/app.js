@@ -8,10 +8,19 @@ const userRoutesLoaded = require('./routes/user-loaded');
 const customerRoutes = require('./routes/customers');
 const cvRoutes = require('./routes/cv');
 const vlaUserRoutes = require('./routes/user-vla');
+const emailRoutes = require('./routes/emails');
 const cors = require('cors');
 
 app.use(cors());
 app.use(bodyParser.json());
+// const nodemailer = require('nodemailer');
+// const exhbs = require('express-handlebars');
+
+
+// app.engine('handlebars', exhbs());
+// app.set('view engine', 'handlebars');
+
+// app.use(express.urlencoded({ extended: true }));
 
 // mongodb+srv://Admin:<password>@cluster0.gqxeqtf.mongodb.net/?retryWrites=true&w=majority
 
@@ -66,5 +75,8 @@ app.use('/api/ribeiro-cafe', cvRoutes);
 
 // VLA Routes
 app.use('/api/vla/user', vlaUserRoutes);
+
+// Email Routes
+app.use('/api/matla', emailRoutes);
 
 module.exports = app;
