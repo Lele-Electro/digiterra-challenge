@@ -31,12 +31,12 @@ router.post("/emails", async (req, res, next) => {
 
 // CONFIGURE THE MAIL TRANSPOTER
 const transporter = nodemailer.createTransport({
-  host: "mail.techbusiness.co.za",
+  host: "mail.virtuallearnacademy.co.za",
   port: 465, 
   secure: true, // true for port 465, false for other ports
   auth: {
-    user: "matla@techbusiness.co.za",
-    pass: "matla@techbusiness.co.za",
+    user: "customerservice@virtuallearnacademy.co.za",
+    pass: "VLA#202416",
   },
 });
 
@@ -55,9 +55,9 @@ transporter.use('compile', hbs(hbsOptions));
 // SEND THE MAIL WITH THE TEMPLATE
 async function main() {
   const info = await transporter.sendMail({
-    from: '"Matla Life" matla@techbusiness.co.za',  // sender address
-    to: "toni101ribeiro@gmail.com, antonio@devsense.co.za", // list of receivers
-    subject: `${req.body.name} `, // Subject line
+    from: '"Virtual Learn Academy" customerservice@virtuallearnacademy.co.za',  // sender address
+    to: "toni101ribeiro@gmail.com, romellaevents@gmail.com", // list of receivers
+    subject:'Welcome to Virtual Learn Academy', //`${req.body.name} `, // Subject line
     // text: "Hello world?", // plain text body
    template: 'welcomeMessage', // html body
   });
