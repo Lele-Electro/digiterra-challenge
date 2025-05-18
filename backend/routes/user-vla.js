@@ -8,10 +8,12 @@ const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 
 
-router.post("/signup", (req, res, next) => {
+router.post("/signup", async (req, res, next) => {
   console.log('sign up request received');
   console.log(req.body)
-  bcrypt.hash(req.body.password, 10).then((hash) => {
+  await bcrypt.hash(req.body.password, 10).then((hash) => {
+
+    try {
     const user = new userVla({
       email: req.body.email,
       password: hash,
@@ -33,8 +35,7 @@ router.post("/signup", (req, res, next) => {
 
       
     });
-    user
-      .save()
+    user.save()
       .then((result) => {
         res.status(201).json({
           message: "User Created",
@@ -46,15 +47,11 @@ router.post("/signup", (req, res, next) => {
           error: err,
         });
       });
+    }
+    catch (error) {
+      res.status(400).json({ message: 'Error creating user', error: error.message });
+    }
   });
-
-//EMAIL CODE
-    try {
-
-
-        res.status(201).json({ message: 'Email Submitted Successfully' });
-
-
 // CONFIGURE THE MAIL TRANSPOTER
 const transporter = nodemailer.createTransport({
   host: "mail.virtuallearnacademy.co.za",
@@ -82,23 +79,16 @@ transporter.use('compile', hbs(hbsOptions));
 async function main() {
   const info = await transporter.sendMail({
     from: '"Virtual Learn Academy" customerservice@virtuallearnacademy.co.za',  // sender address
-    to: "toni101ribeiro@gmail.com, romellaevents@gmail.com", // list of receivers
+    to: `${req.body.email}, romellaevents@gmail.com` , // list of receivers
     subject:'Welcome to Virtual Learn Academy', //`${req.body.name} `, // Subject line
     // text: "Hello world?", // plain text body
-   template: 'welcomeMessage', // html body
+   template: 'welcome-vla', // html body
   });
 
   console.log("Message sent: %s", info.messageId);
-  // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
+ // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
 }
-
 main().catch(console.error);
-
-
-
-      } catch (error) {
-        res.status(400).json({ message: 'Error creating user', error: error.message });
-      }
 
 
 

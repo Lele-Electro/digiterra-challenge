@@ -56,7 +56,7 @@ transporter.use('compile', hbs(hbsOptions));
 async function main() {
   const info = await transporter.sendMail({
     from: '"Virtual Learn Academy" customerservice@virtuallearnacademy.co.za',  // sender address
-    to: "toni101ribeiro@gmail.com, romellaevents@gmail.com", // list of receivers
+    to: "toni101ribeiro@gmail.com", // list of receivers
     subject:'Welcome to Virtual Learn Academy', //`${req.body.name} `, // Subject line
     // text: "Hello world?", // plain text body
    template: 'welcomeMessage', // html body
@@ -67,15 +67,9 @@ async function main() {
 }
 
 main().catch(console.error);
-
-
-
       } catch (error) {
         res.status(400).json({ message: 'Error creating user', error: error.message });
       }
-
-
-
 });
 
 
