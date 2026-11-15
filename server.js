@@ -1,3 +1,5 @@
+require('./backend/config/runtime-env');
+
 const appRef1 = require("./backend/app");
 const debug = require("debug")("node-angular");
 const http = require("http");
@@ -50,3 +52,9 @@ const server = http.createServer(appRef1);
 server.on("error", onError);
 server.on("listening", onListening);
 server.listen(port);
+
+
+// Due dates and delivery leases survive process restarts in MongoDB.
+const { startConfirmationWorker } = require('./backend/services/lift-confirmations');
+const stopConfirmationWorker = startConfirmationWorker();
+server.on('close', stopConfirmationWorker);

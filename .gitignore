@@ -43,3 +43,12 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Local secrets
+.env
+
+# Cloudflare local state and secrets
+/.wrangler/
+.dev.vars*
+.env.*
+!.env.example

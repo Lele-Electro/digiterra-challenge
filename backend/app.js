@@ -1,3 +1,4 @@
+require('./config/runtime-env');
 const express = require('express');
 const bodyParser = require('body-parser');
 const Customer = require('./models/customer');
@@ -9,6 +10,8 @@ const customerRoutes = require('./routes/customers');
 const cvRoutes = require('./routes/cv');
 const vlaUserRoutes = require('./routes/user-vla');
 const emailRoutes = require('./routes/emails');
+const ribeiroUserRoutes = require('./routes/user-ribeiro');
+const dateSelectionRoutes = require('./routes/date-selections');
 const cors = require('cors');
 
 app.use(cors());
@@ -25,7 +28,9 @@ app.use(bodyParser.json());
 // mongodb+srv://Admin:<password>@cluster0.gqxeqtf.mongodb.net/?retryWrites=true&w=majority
 
 // mongoose2.connect('mongodb+srv://Admin:KElJ3lISFvKq2mHL@cluster0.gqxeqtf.mongodb.net/?retryWrites=true&w=majority')
-mongoose2.connect('mongodb+srv://Admin:KElJ3lISFvKq2mHL@cluster0.gqxeqtf.mongodb.net/digiterraDB?retryWrites=true&w=majority')
+// Tests connect to their own in-memory database instead
+if (process.env.NODE_ENV !== 'test') {
+mongoose2.connect(process.env.MONGODB_URI || 'mongodb+srv://Admin:KElJ3lISFvKq2mHL@cluster0.gqxeqtf.mongodb.net/digiterraDB?retryWrites=true&w=majority')
   // mongooose.connect('mongodb+srv://Admin:KElJ3lISFvKq2mHL@cluster0@cluster0.gqxeqtf.mongodb.net/?retryWrites=true&w=majority')
   .then(() => {
     console.log("connected to the database");
@@ -34,6 +39,7 @@ mongoose2.connect('mongodb+srv://Admin:KElJ3lISFvKq2mHL@cluster0.gqxeqtf.mongodb
     console.log("connection to database failed.");
     console.log(error ?.MongooseServerSelectionError)
   })
+}
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -78,5 +84,10 @@ app.use('/api/vla/user', vlaUserRoutes);
 
 // Email Routes
 app.use('/api/matla', emailRoutes);
+
+// Ribeiro Routes
+app.use('/api/ribeiro/user', ribeiroUserRoutes);
+app.use('/api/ribeiro/date-selections', dateSelectionRoutes);
+app.use('/api/ribeiro/lift-bookings', require('./routes/lift-bookings'));
 
 module.exports = app;

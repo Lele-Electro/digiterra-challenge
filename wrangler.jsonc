@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "digiterra-backend",
+  "account_id": "b8695c2cc37084b09551db6af0fc5427",
+  "main": "worker/index.mjs",
+  "compatibility_date": "2026-10-22",
+  "compatibility_flags": ["nodejs_compat"],
+  "keep_vars": true,
+  "version_metadata": { "binding": "CF_VERSION_METADATA" },
+  "build": { "command": "node worker/build.cjs" },
+  "durable_objects": {
+    "bindings": [{ "name": "BACKEND", "class_name": "DigiterraBackend" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["DigiterraBackend"] }],
+  "triggers": { "crons": ["* * * * *"] },
+  "vars": {
+    "RIBEIRO_APP_URL": "https://www.toniribeiro.com",
+    "CORS_ALLOWED_ORIGINS": "http://localhost:4200,http://127.0.0.1:4200,https://www.toniribeiro.com,https://toniribeiro.com"
+  }
+}

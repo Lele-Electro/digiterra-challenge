@@ -61,7 +61,7 @@ router.post("/signin", (req, res, next) => {
           });
         } else{
           //Create JSON TOKEN
-          const token = jwt.sign({email: fetchedUser.email, businessClient: fetchedUser.businessClient, userId: fetchedUser._id }, 'secret_to_enable_uncrackable_code_random_sentence_this_is', {expiresIn: '1h'} );
+          const token = jwt.sign({email: fetchedUser.email, businessClient: fetchedUser.businessClient, userId: fetchedUser._id }, process.env.JWT_SECRET, {expiresIn: '1h'} );
 
 
           //RESPOND WITH TOKEN

@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const userVla = require("../models/user-vla");
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
+const path = require('path');
 
 
 router.post("/signup", async (req, res, next) => {
@@ -54,12 +55,12 @@ router.post("/signup", async (req, res, next) => {
   });
 // CONFIGURE THE MAIL TRANSPOTER
 const transporter = nodemailer.createTransport({
-  host: "mail.virtuallearnacademy.co.za",
-  port: 465,
-  secure: true, // true for port 465, false for other ports
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT),
+  secure: Number(process.env.SMTP_PORT) === 465,
   auth: {
-    user: "customerservice@virtuallearnacademy.co.za",
-    pass: "VLA#202416",
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASSWORD,
   },
 });
 
@@ -67,10 +68,10 @@ const transporter = nodemailer.createTransport({
 const hbsOptions = {
   viewEngine: {
     extName: ".handlebars",
-    layoutsDir: "./backend/views",
+    layoutsDir: path.join(__dirname, '..', 'views'),
     defaultLayout: false,
   },
-  viewPath: "./backend/views",
+  viewPath: path.join(__dirname, '..', 'views'),
   extName: ".handlebars",
 };
 transporter.use('compile', hbs(hbsOptions));
@@ -78,15 +79,14 @@ transporter.use('compile', hbs(hbsOptions));
 // SEND THE MAIL WITH THE TEMPLATE
 async function main() {
   const info = await transporter.sendMail({
-    from: '"Virtual Learn Academy" customerservice@virtuallearnacademy.co.za',  // sender address
-    to: `${req.body.email}, romellaevents@gmail.com` , // list of receivers
+    from: `"Virtual Learn Academy" <${process.env.SMTP_USER}>`,
+    to: `${req.body.email}, ${process.env.VLA_EMAIL_RECIPIENT || process.env.SMTP_USER}`,
     subject:'Welcome to Virtual Learn Academy', //`${req.body.name} `, // Subject line
     // text: "Hello world?", // plain text body
    template: 'welcome-vla', // html body
   });
 
   console.log("Message sent: %s", info.messageId);
- // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
 }
 main().catch(console.error);
 
@@ -120,7 +120,7 @@ router.post("/signin", (req, res, next) => {
           });
         } else{
           //Create JSON TOKEN
-          const token = jwt.sign({email: fetchedUser.email, businessClient: fetchedUser.businessClient, userId: fetchedUser._id }, 'secret_to_enable_uncrackable_code_random_sentence_this_is', {expiresIn: '1h'} );
+          const token = jwt.sign({email: fetchedUser.email, businessClient: fetchedUser.businessClient, userId: fetchedUser._id }, process.env.JWT_SECRET, {expiresIn: '1h'} );
 
 
           //RESPOND WITH TOKEN
