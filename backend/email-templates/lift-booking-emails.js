@@ -50,9 +50,9 @@ ${table('class="row-content" width="640" style="width:640px;max-width:640px;marg
 </td></tr></table>`;
 }
 
-function image({ src, alt, width, height, radius = 0, background = GREEN, color = '#ffffff', center = false }) {
+function image({ src, alt, width, height }) {
   // The styled alt text and background keep the layout meaningful when images are blocked.
-  return `<img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" width="${width}"${height ? ` height="${height}"` : ''} style="display:block;width:100%;max-width:${width}px;height:auto;${center ? 'margin:0 auto;' : ''}border:0;outline:none;text-decoration:none;border-radius:${radius}px;background-color:${background};color:${color};font-family:${FONT};font-size:14px;line-height:20px;"/>`;
+  return `<img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" width="${width}" height="${height}" style="display:block;width:100%;max-width:${width}px;height:auto;border:0;outline:none;text-decoration:none;background-color:${GREEN};color:#ffffff;font-family:${FONT};font-size:14px;line-height:20px;"/>`;
 }
 
 function button(label, href) {
@@ -88,13 +88,9 @@ a[x-apple-data-detectors] { color: inherit !important; text-decoration: inherit 
 #MessageViewBody a { color: inherit; text-decoration: none; }
 @media (max-width: 660px) {
   .row-content { width: 100% !important; }
-  .stack .column { display: block !important; width: 100% !important; }
   .pad-x { padding-left: 24px !important; padding-right: 24px !important; }
-  .column-gap { padding: 20px 0 0 !important; }
   .hero-title { font-size: 28px !important; line-height: 34px !important; }
   .detail-label { width: 112px !important; }
-  .center-mobile { text-align: center !important; }
-  .center-mobile img { margin: 0 auto !important; }
 }
 </style>
 </head>
@@ -167,29 +163,15 @@ Toni Ribeiro`;
 <h1 class="hero-title" style="margin:12px 0 0;font-family:${FONT};font-size:34px;font-weight:800;line-height:40px;letter-spacing:-0.5px;color:#ffffff;">${escapeHtml(headline)}</h1>
 </div>`, { background: GREEN, padding: '32px 0 36px' }),
       row(`<div class="pad-x" style="padding:0 40px;">
-${paragraph(`Hi ${escapeHtml(booking.name)},`)}
-${paragraph(`Thank you for booking with the private lift club. The whole hour is reserved for you${booking.passengers > 1 ? ` and your fellow traveller${booking.passengers > 2 ? 's' : ''}` : ''}.`)}
-${table('width="100%"')}<tr><td bgcolor="${GREEN_SOFT}" style="padding:18px 20px;border-left:4px solid ${GREEN};border-radius:6px;background-color:${GREEN_SOFT};font-family:${FONT};font-size:16px;font-weight:700;line-height:24px;color:${INK};">${WHATSAPP_NOTE}</td></tr></table>
-</div>`, { padding: '36px 0 8px' }),
+${paragraph(`Hi ${escapeHtml(booking.name)}, the whole hour is reserved for you${booking.passengers > 1 ? ` and your fellow traveller${booking.passengers > 2 ? 's' : ''}` : ''}. Toni will be there 5 minutes early in the red Volvo S60.`)}
+${table('width="100%"')}<tr><td bgcolor="${GREEN_SOFT}" style="padding:16px 20px;border-left:4px solid ${GREEN};border-radius:6px;background-color:${GREEN_SOFT};font-family:${FONT};font-size:16px;font-weight:700;line-height:24px;color:${INK};">${WHATSAPP_NOTE}</td></tr></table>
+</div>`, { padding: '32px 0 20px' }),
       row(`<div class="pad-x" style="padding:0 40px;">
-<h2 style="margin:0 0 8px;font-family:${FONT};font-size:20px;font-weight:800;line-height:26px;color:${INK};">Your journey</h2>
 ${details(journeyRows(booking))}
-</div>`, { padding: '24px 0 32px' }),
-      row(`<div class="pad-x" style="padding:0 40px;">
-${table('class="stack" width="100%"')}<tr>
-<td class="column center-mobile" width="180" valign="middle">${image({ src: `${assets}/toni-portrait.jpg`, alt: 'Toni Ribeiro, your driver, smiling in an olive suit', width: 180, height: 180, radius: 90 })}</td>
-<td class="column column-gap center-mobile" valign="middle" style="padding:0 0 0 28px;">
-<h2 style="margin:0 0 8px;font-family:${FONT};font-size:22px;font-weight:800;line-height:28px;color:${INK};">Toni will be there 5 minutes early</h2>
-<p style="margin:0;font-family:${FONT};font-size:15px;line-height:24px;color:${MUTED};">Look out for the red Volvo S60 at your pickup point. Toni will message you on WhatsApp before the journey.</p>
-<div style="padding-top:14px;">${image({ src: `${assets}/volvo.png`, alt: 'Red Volvo S60', width: 220, height: 114, background: GREEN_SOFT, color: INK })}</div>
-</td>
-</tr></table>
-</div>`, { background: GREEN_SOFT, padding: '32px 0' }),
+</div>`, { padding: '0 0 28px' }),
       row(`<div class="pad-x" style="padding:0 40px;text-align:center;">
-<p style="margin:0 0 20px;font-family:${FONT};font-size:15px;line-height:24px;color:${MUTED};">Plans changed? You can edit or cancel your reservation at any time before departure.</p>
 ${button('View or change my booking', `${site}/lift-club`)}
-</div>`, { padding: '36px 0' }),
-      row(image({ src: `${assets}/lift-club-car.jpg`, alt: 'The front of Toni’s red Volvo parked beside a garden at sunset', width: 640, height: 280 }), { background: GREEN }),
+</div>`, { padding: '0 0 36px' }),
       footer({ site, contact, reason: 'You are receiving this email because you reserved a lift club timeslot with this address.' }),
     ],
   });
@@ -201,7 +183,7 @@ ${button('View or change my booking', `${site}/lift-club`)}
  * booking additionally has { email }.
  */
 function bookingNotificationEmail(booking, { env = process.env } = {}) {
-  const { site, assets } = emailUrls(env);
+  const { site } = emailUrls(env);
   const chat = whatsappLink(booking.whatsapp);
   const route = directionsLink(booking.pickup, booking.dropoff);
   const subject = `${booking.updated ? 'Updated' : 'New'} lift club booking: ${booking.date}, ${booking.time}`;
@@ -228,27 +210,18 @@ Please confirm the details with ${booking.name} on WhatsApp.`;
     rows: [
       brandBar(),
       row(`<div class="pad-x" style="padding:0 40px;">
-${table('class="stack" width="100%"')}<tr>
-<td class="column center-mobile" valign="middle">
 <div style="font-family:${FONT};font-size:12px;font-weight:700;letter-spacing:3px;line-height:16px;text-transform:uppercase;color:#bfd6cc;">${booking.updated ? 'Booking updated' : 'New booking'}</div>
 <h1 class="hero-title" style="margin:12px 0 0;font-family:${FONT};font-size:30px;font-weight:800;line-height:36px;letter-spacing:-0.5px;color:#ffffff;">${escapeHtml(booking.name)} is travelling with you</h1>
-<p style="margin:12px 0 0;font-family:${FONT};font-size:16px;line-height:24px;color:#d5e3dc;">${escapeHtml(booking.date)}<br/>${escapeHtml(booking.time)} SAST</p>
-</td>
-<td class="column column-gap center-mobile" width="170" valign="middle" style="padding:0 0 0 24px;">${image({ src: `${assets}/toni-driver.jpg`, alt: 'Toni Ribeiro in an olive suit', width: 170, height: 170, radius: 85, background: GREEN_DEEP })}</td>
-</tr></table>
-</div>`, { background: GREEN, padding: '36px 0' }),
+<p style="margin:12px 0 0;font-family:${FONT};font-size:16px;line-height:24px;color:#d5e3dc;">${escapeHtml(booking.date)} &middot; ${escapeHtml(booking.time)} SAST</p>
+</div>`, { background: GREEN, padding: '32px 0' }),
       row(`<div class="pad-x" style="padding:0 40px;">
-${table('width="100%"')}<tr><td bgcolor="${GREEN_SOFT}" style="padding:18px 20px;border-left:4px solid ${GREEN};border-radius:6px;background-color:${GREEN_SOFT};font-family:${FONT};font-size:16px;font-weight:700;line-height:24px;color:${INK};">Please confirm the details with ${escapeHtml(booking.name)} on WhatsApp. They have been told to expect your message.</td></tr></table>
-</div>`, { padding: '32px 0 8px' }),
-      row(`<div class="pad-x" style="padding:0 40px;">
-<h2 style="margin:0 0 8px;font-family:${FONT};font-size:20px;font-weight:800;line-height:26px;color:${INK};">Booking details</h2>
+${paragraph(`Please confirm the details with ${escapeHtml(booking.name)} on WhatsApp. They have been told to expect your message.`, 'font-weight:700;')}
 ${details(rows)}
-</div>`, { padding: '24px 0 32px' }),
+</div>`, { padding: '28px 0' }),
       row(`<div class="pad-x" style="padding:0 40px;text-align:center;">
 ${chat ? `${button('Message on WhatsApp', chat)}<div style="height:14px;line-height:14px;font-size:14px;">&nbsp;</div>` : ''}
 <a href="${escapeHtml(route)}" target="_blank" style="font-family:${FONT};font-size:15px;font-weight:700;line-height:24px;color:${GREEN};text-decoration:underline;">Open the route in Google Maps</a>
-<div style="padding-top:24px;">${image({ src: `${assets}/volvo.png`, alt: 'Red Volvo S60', width: 260, height: 135, background: GREEN_SOFT, color: INK, center: true })}</div>
-</div>`, { background: GREEN_SOFT, padding: '32px 0' }),
+</div>`, { padding: '0 0 36px' }),
       footer({ site, reason: 'Sent automatically when a member’s booking stays unchanged for five minutes.' }),
     ],
   });
